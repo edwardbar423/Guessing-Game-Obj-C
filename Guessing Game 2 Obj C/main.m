@@ -1,17 +1,32 @@
-//
-//  main.m
-//  Guessing Game 2 Obj C
-//
-//  Created by Andrew Barber on 8/15/16.
-//  Copyright © 2016 Invictus. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 
+NSString *firstName = @"Your Name";
+NSString *lastName = @"Here";
+
+
 int main(int argc, const char * argv[]) {
-    @autoreleasepool {
-        // insert code here...
-        NSLog(@"Hello, World!");
+    
+    int input = 0;
+    
+    NSNumber *gen = @(arc4random_uniform(5));
+    
+    NSLog(@"%@ %@", firstName, lastName);
+    NSLog(@"Pick a number between 0 and 5.");
+    
+    scanf("%i", &input);
+    
+    while(input != gen)
+    {
+        NSLog(@"Your answer %d is wrong!\n", input);
+        NSLog(@"Pick again");
+        scanf("%i", &input);
+        if(input == gen)
+        {
+            NSLog(@"Correct!");
+        }
     }
+    
+    NSLog(@"Your answer is %d", input);
+    
     return 0;
 }
