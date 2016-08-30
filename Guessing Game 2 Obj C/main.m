@@ -1,32 +1,63 @@
 #import <Foundation/Foundation.h>
 
-NSString *firstName = @"Your Name";
-NSString *lastName = @"Here";
+void guessingGame();
+void startGame();
+void endGame();
 
+int restartGame ();
+int playAgainInput = -1;
+int input = -1;
 
 int main(int argc, const char * argv[]) {
+    startGame();
+    return 0;
+}
+
+void startGame() {
     
-    int input = 0;
+    NSString *winner = @"You win!\n";
     
+    NSMutableArray *badGuesses = [NSMutableArray arrayWithCapacity:100];
     NSNumber *gen = @(arc4random_uniform(5));
+    NSNumber *numberInput = [NSNumber numberWithInt:input];
     
-    NSLog(@"%@ %@", firstName, lastName);
-    NSLog(@"Pick a number between 0 and 5.");
-    
-    scanf("%i", &input);
-    
-    while(input != gen)
-    {
-        NSLog(@"Your answer %d is wrong!\n", input);
-        NSLog(@"Pick again");
-        scanf("%i", &input);
-        if(input == gen)
-        {
-            NSLog(@"Correct!");
-        }
+    while ([numberInput intValue] != [gen intValue]) {
+        
+        NSLog(@"Guess a number between 0 and 4!\n");
+        
+        fpurge(stdin);
+        scanf("%d", &input);
+        numberInput = [NSNumber numberWithInt:input];
+        [badGuesses addObject:numberInput];
+        NSLog(@"You guessed %@", numberInput);
+        
+        NSLog(@"%@ are your guesses so far", badGuesses);
     }
     
-    NSLog(@"Your answer is %d", input);
+    NSLog(@"%@", winner);
     
-    return 0;
+    
+    NSLog(@"%@ is the correct number", gen);
+    
+    return endGame();
+}
+
+
+void endGame() {
+    if (restartGame() == 0 ) {
+        startGame();
+    }
+}
+
+int restartGame() {
+    
+    int playAgain = -1;
+    
+    while (playAgain != 0 && playAgain != 1) {
+        NSLog(@"Do you want to play again?\n");
+        NSLog(@"0: YES\n1: NO\n");
+        scanf("%d", &playAgainInput);
+        playAgain = playAgainInput;
+    }
+    return playAgain;
 }
